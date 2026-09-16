@@ -1,3 +1,8 @@
+import { parsedEnvironment } from '../settings/parsedEnvironment.js';
+
+if (parsedEnvironment.DB_ENV === 'dev')
+  throw new Error('Can only use Aiven on production.');
+
 interface GetServiceResponse {
   errors?: [];
   service?: {
@@ -25,10 +30,10 @@ interface GetDatabasesResponse {
 }
 
 const aivenData = {
-  projectName: process.env.AIVEN_PROJECT_NAME,
-  serviceName: process.env.AIVEN_SERVICE_NAME,
-  databaseName: process.env.AIVEN_DB_NAME,
-  token: process.env.AIVEN_TOKEN,
+  projectName: parsedEnvironment.AIVEN_PROJECT_NAME,
+  serviceName: parsedEnvironment.AIVEN_SERVICE_NAME,
+  databaseName: parsedEnvironment.AIVEN_DB_NAME,
+  token: parsedEnvironment.AIVEN_TOKEN,
 };
 
 const getServiceData = async (): Promise<GetServiceResponse> => {
