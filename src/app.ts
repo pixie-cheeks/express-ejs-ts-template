@@ -3,6 +3,7 @@ import express, {
   urlencoded as expressUrlencoded,
 } from 'express';
 import path from 'node:path';
+import expressLayouts from 'express-ejs-layouts';
 import { errorHandler } from './errors.js';
 import { createIndexRouter } from './routers/indexRouter.js';
 import { parsedEnvironment } from './settings/parsedEnvironment.js';
@@ -19,11 +20,15 @@ app.set('view engine', 'ejs');
 
 app.use(expressStatic(path.join(dirname, 'public')));
 app.use(expressUrlencoded({ extended: true }));
+
 setupSessionStore(app);
 setupPassport(app);
 
-app.use('/', createIndexRouter());
+app.set('layout extractScripts', true);
+app.set('layout extractStyles', true);
+app.use(expressLayouts);
 
+app.use('/', createIndexRouter());
 app.use(errorHandler);
 
 app.listen(PORT, () => {
