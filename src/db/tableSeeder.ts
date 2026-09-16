@@ -1,20 +1,22 @@
-const delay = (delayInMS: number) =>
-  new Promise((resolve) => setTimeout(resolve, delayInMS));
+const delay = (delayInMS: number): Promise<undefined> =>
+  new Promise((resolve) => {
+    setTimeout(resolve, delayInMS);
+  });
 
 const tableOrderArray = [
   {
-    async deleteAllRows() {
+    async deleteAllRows(): Promise<undefined> {
       await delay(100);
       console.log('WIP');
     },
-    async dropTable() {
+    async dropTable(): Promise<undefined> {
       await delay(100);
       console.log('WIP');
     },
   },
 ];
 
-const resetTables = (): Promise<void[]> =>
+const resetTables = (): Promise<undefined[]> =>
   Promise.all(tableOrderArray.map((table) => table.deleteAllRows()));
 
 const dropTables = async (): Promise<void> => {
@@ -25,6 +27,7 @@ const dropTables = async (): Promise<void> => {
 };
 
 const seedTables = async (): Promise<void> => {
+  await delay(100);
   console.log('Will add some seeds later!');
 };
 
